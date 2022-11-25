@@ -17,8 +17,8 @@ pipeline {
     stages {
         stage('Checkout Application Git Branch') {
             steps {
-                git credentialsId: ${gitCredentialId},
-                    url: ${gitSrcUrl},
+                git credentialsId: "${gitCredentialId}",
+                    url: "${gitSrcUrl}",
                     branch: 'main'
             }
             post {
@@ -85,14 +85,14 @@ pipeline {
 
         stage('K8S Manifest Update') {
                 steps {
-                    git credentialsId: ${gitCredentialId},
-                        url: ${gitManifestUrl},
+                    git credentialsId: "${gitCredentialId}",
+                        url: "${gitManifestUrl}",
                         branch: 'main'
 
                     sh "sed -i 's/${dockerImageName}:.*\$/${dockerImageName}:${currentBuild.number}/g' deployment.yaml"
                     sh "git add deployment.yaml"
                     sh "git commit -m '[UPDATE] config-service ${currentBuild.number} image versioning'"
-                    sshagent(credentials: [${gitCredentialId}]) {
+                    sshagent(credentials: ["${gitCredentialId}"]) {
                         sh "git remote set-url origin ${gitManifestUrl}"
                         sh "git push -u origin master"
                      }
