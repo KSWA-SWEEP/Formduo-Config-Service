@@ -91,7 +91,7 @@ pipeline {
                         branch: 'main'
 
                     sh "sed -i 's/${dockerImageName}:.*\$/${dockerImageName}:${currentBuild.number}/g' ./${dockerImageName}/deployment.yaml"
-                    sh "git add deployment.yaml"
+                    sh "git add ./${dockerImageName}/deployment.yaml"
                     sh "git commit -m '[UPDATE] config-service ${currentBuild.number} image versioning'"
                     sshagent(credentials: ["${gitCredentialId}"]) {
                         sh "git remote set-url origin ${gitManifestUrl}"
