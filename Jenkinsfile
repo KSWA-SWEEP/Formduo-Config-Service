@@ -93,9 +93,11 @@ pipeline {
                     sh "sed -i 's/${dockerImageName}:.*\$/${dockerImageName}:${currentBuild.number}/g' ./${dockerImageName}/deployment.yaml"
                     sh "git add ./${dockerImageName}/deployment.yaml"
                     sh "git commit -m '[UPDATE] config-service ${currentBuild.number} image versioning'"
+                    sh "git config --global user.email "panggeunho@gmail.com
+                    sh "git config --global user.name "banggeunho"
                     sshagent(credentials: ["${gitCredentialId}"]) {
                         sh "git remote set-url origin ${gitManifestUrl}"
-                        sh "git push -u origin master"
+                        sh "git push -u origin main"
                      }
                 }
                 post {
