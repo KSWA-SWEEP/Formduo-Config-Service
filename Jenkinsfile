@@ -43,7 +43,6 @@ pipeline {
                           echo 'Maven jar build success !'
                         }
                 }
-            }
         }
 
         stage('Docker Image Build') {
@@ -107,5 +106,5 @@ pipeline {
                         }
                 }
         }
-      }
+    }
 }
